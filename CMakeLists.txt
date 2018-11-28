@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ari_study)
+project(AR_Study_Dre)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -217,6 +217,6 @@ add_executable(fullpath_arfuros src/fullpath_arfuros.cpp)
 target_link_libraries(fullpath_arfuros ${catkin_LIBRARIES})
 add_dependencies(fullpath_arfuros AR_Study_Dre)
 
-add_executable(blinker_arfuros src/blinker_arfuros.cpp)
-target_link_libraries(blinker_arfuros ${catkin_LIBRARIES})
-add_dependencies(blinker_arfuros AR_Study_Dre)
+#add_executable(blinker_arfuros src/blinker_arfuros.cpp)
+#target_link_libraries(blinker_arfuros ${catkin_LIBRARIES})
+#add_dependencies(blinker_arfuros AR_Study_Dre_generate_messages_cpp)

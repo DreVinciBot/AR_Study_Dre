@@ -11,7 +11,7 @@ Tufts University
 
 #include "ros/ros.h"
 #include <std_msgs/Float32.h>
-#include <arfuros/Blinker.h>
+#include <AR_Study_Dre/BlinkerMsg.h>
 
 #include <stdint.h>
 #include <sstream>
