@@ -211,12 +211,12 @@ include_directories(
 
 add_executable(path_arfuros src/path_arfuros.cpp)
 target_link_libraries(path_arfuros ${catkin_LIBRARIES})
-add_dependencies(path_arfuros arfuros)
+add_dependencies(path_arfuros AR_Study_Dre)
 
 add_executable(fullpath_arfuros src/fullpath_arfuros.cpp)
 target_link_libraries(fullpath_arfuros ${catkin_LIBRARIES})
-add_dependencies(fullpath_arfuros arfuros)
+add_dependencies(fullpath_arfuros AR_Study_Dre)
 
 add_executable(blinker_arfuros src/blinker_arfuros.cpp)
 target_link_libraries(blinker_arfuros ${catkin_LIBRARIES})
-add_dependencies(blinker_arfuros arfuros)
+add_dependencies(blinker_arfuros AR_Study_Dre)

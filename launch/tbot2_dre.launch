@@ -31,4 +31,10 @@
 <!-- rosrun rosbagTest.py -->
 <!-- <node pkg="dynamic_reconfigure" type="reconfigure_gui" name="reconfigure_gui" -->
 
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+
+  <node name="path_relative" pkg="AR_Study_Dre" type="path_arfuros" respawn="true"/>
+  <node name="fullpath_relative" pkg="AR_Study_Dre" type="fullpath_arfuros" respawn="true"/>
+  <node name="blinker" pkg="AR_Study_Dre" type="blinker_arfuros" respawn="true"/>
+
 </launch>
