@@ -1,8 +1,12 @@
 <launch>
 
-<!-- turtlebot_gazebo -->
+<!-- turtlebot_gazebo 
 	<include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
- </include>
+ </include> -->
+<!-- turtlebot bringup minimum-->
+	<include file="$(find turtlebot_bringup)/launch/minimal.launch">
+		<!-- any potential arguments go here; need to check if 3D goes on by default or not -->	
+</include>
 
 <!-- AMCL with Map -->
 	<include file="$(find turtlebot_gazebo)/launch/amcl_demo.launch">
