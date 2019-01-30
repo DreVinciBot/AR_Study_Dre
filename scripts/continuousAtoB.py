@@ -28,9 +28,6 @@ from geometry_msgs.msg import PoseWithCovarianceStamped
 from std_msgs.msg import String, Int32
 import numpy as np
 import rosbag
-import sys
-
-mode = ['1', '2', '3']
 
 class GoToPose():
     def __init__(self):
@@ -65,8 +62,8 @@ class GoToPose():
 	# Start moving
         self.move_base.send_goal(goal)
 
-	# Allow TurtleBot up to 120 seconds to complete task
-	success = self.move_base.wait_for_result(rospy.Duration(120))
+	# Allow TurtleBot up to 60 seconds to complete task
+	success = self.move_base.wait_for_result(rospy.Duration(60))
 
         state = self.move_base.get_state()
         result = False
@@ -88,11 +85,10 @@ class GoToPose():
 
     def coordinate_callback(self, data):
 
-        print("coordinate_callback")
         if self.counter == 0:
             self.posA = [data.x, data.y]
             print("Point A: " + str(self.posA))
-            self.counter = 1
+            self.counter = 0
 
         elif self.counter == 1:
             self.posB = [data.x, data.y]
@@ -100,22 +96,21 @@ class GoToPose():
             self.counter = 0
         else:
             pass
-
+        self.counter += 1
 
 if __name__ == '__main__':
 
-    key = ['y']
     zero  = [0, 0]
 
     try:
         rospy.init_node('nav_test', anonymous=False)
         point_pub = rospy.Publisher("/point_ab", String, queue_size=10)
         command_sub = rospy.Publisher("/data_logging_commands", String, queue_size = 1)
-
         navigator = GoToPose()
 
         print("Run select_A_to_B.py script and select points.")
         while navigator.posA == zero or navigator.posB == zero:
+            print(navigator.posA, navigator.posB)
             '''
                 This is to make sure that both points have been obtained.
             '''
@@ -124,13 +119,20 @@ if __name__ == '__main__':
         B = navigator.posB
 
         start_index = 0
-        counter = 0
         goal_index = start_index
         locations_names = ['A', "B"]
         num_location = 2
 
         location_coord = np.zeros([num_location,2])
+        '''
+        A = [-0.02 , 0.19]
+        B = [-1.57, -9.69]
 
+
+        A = [0.33, -0.13]
+        B = [-6.85, 0.50]
+
+        '''
         location_coord[0] = A
         location_coord[1] = B
 
@@ -145,40 +147,13 @@ if __name__ == '__main__':
 
             if success:
                 rospy.loginfo("Hooray, reached point " + locations_names[goal_index])
-
-                if locations_names[goal_index] == 'A':
-
-                    name = raw_input("Enter rosbag file name...\n")
-                    name = name.replace(" ","")
-
-                    module = raw_input("Enter Mode...")
-
-                    while module not in mode:
-                        module = raw_input("Mode must be either 1, 2, 3...")
-
-                    bagfile = name + '_' + module
-                    command_sub.publish(bagfile)
-
-                    proceed = raw_input("To continue to point B press 'y'...")
-
-                    while proceed not in key:
-                        proceed = raw_input("You must press 'y'...")
-
-                    else:
-                        print("Proceeding to B...")
-                        point_pub.publish('A')
-                        counter += 1
-                        print("lap " + str(counter))
-
-                if locations_names[goal_index] == 'B':
-                    point_pub.publish('B')
+                point_pub.publish(locations_names[goal_index])
 
             else:
                 rospy.loginfo("The base failed to reach point " + locations_names[goal_index])
 
 
             goal_index += 1
-
 
             if goal_index >= num_location:
                 goal_index = 0
