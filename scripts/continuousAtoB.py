@@ -109,11 +109,11 @@ if __name__ == '__main__':
         navigator = GoToPose()
 
         print("Run select_A_to_B.py script and select points.")
-        while navigator.posA == zero or navigator.posB == zero:
-            print(navigator.posA, navigator.posB)
-            '''
-                This is to make sure that both points have been obtained.
-            '''
+
+        print(navigator.posA, navigator.posB)
+        '''
+            This is to make sure that both points have been obtained.
+        '''
 
         A = navigator.posA
         B = navigator.posB
@@ -124,15 +124,7 @@ if __name__ == '__main__':
         num_location = 2
 
         location_coord = np.zeros([num_location,2])
-        '''
-        A = [-0.02 , 0.19]
-        B = [-1.57, -9.69]
 
-
-        A = [0.33, -0.13]
-        B = [-6.85, 0.50]
-
-        '''
         location_coord[0] = A
         location_coord[1] = B
 
