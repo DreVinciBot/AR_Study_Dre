@@ -14,12 +14,14 @@ class arStudyData:
     def __init__(self):
 
         rospy.init_node('poseData', anonymous = True)
+        self.recording = False
         self.counter = 1
         self.xPos = 0
         self.counter_global = 0
         self.counter_local = 0
         self.counter_navfnROS = 0
-     
+        self.current_filename = ""
+
         self.pose_sub = rospy.Subscriber("/amcl_pose",PoseWithCovarianceStamped, self.callback_pose)
         self.currentpoint_sub = rospy.Subscriber("/point_ab", String, self.callback_point)
         self.odom_sub = rospy.Subscriber("/odom", Odometry, self.odom_callback)
@@ -29,11 +31,6 @@ class arStudyData:
         self.local_plan_sub = rospy.Subscriber("/move_base/DWAPlannerROS/local_plan", Path, self.local_plan_callback)
         self.navfnRos_sub = rospy.Subscriber("/move_base/NavfnROS/plan", Path, self.navfnRos_callback)
 
-
-        self.current_filename = ""
-        self.recording = False
-
-
         rospy.spin()
 
     def navfnRos_callback(self, data):
@@ -42,7 +39,7 @@ class arStudyData:
         self.printout()
 
         #print("Full Path replan: " + str(self.counter_navfnROS))
-      
+
         if self.recording == True:
             self.bag.write("/move_base/NavfnROS/plan", data)
             pass
@@ -73,12 +70,10 @@ class arStudyData:
         else:
             pass
 
-
     def command_callback(self,data):
 
         self.current_filename = data.data
         print("Current file is " + self.current_filename)
-
 
     def callback_point(self,data):
 
@@ -103,7 +98,6 @@ class arStudyData:
             self.counter_local = 0
             self.counter_navfnROS = 0
 
-
         else:
             pass
 
@@ -111,7 +105,6 @@ class arStudyData:
 
         if self.recording == True:
             self.bag.write("/amcl_pose",data)
-
         else:
             pass
 
@@ -133,8 +126,7 @@ class arStudyData:
     def printout(self):
         print("Global RP: " + str(self.counter_global) + "\tLocal RP: " + str(self.counter_local) + "\tFull Path :" + str(self.counter_navfnROS) + "\n")
 
-    
 
 if __name__ == '__main__':
+    print("Waiting for file name to be entered...")
     nav = arStudyData()
-

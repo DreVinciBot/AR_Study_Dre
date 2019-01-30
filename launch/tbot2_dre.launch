@@ -1,11 +1,11 @@
 <launch>
 
-<!-- turtlebot_gazebo 
+<!-- turtlebot_gazebo
 	<include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
  </include> -->
 <!-- turtlebot bringup minimum-->
 	<include file="$(find turtlebot_bringup)/launch/minimal.launch">
-		<!-- any potential arguments go here; need to check if 3D goes on by default or not -->	
+		<!-- any potential arguments go here; need to check if 3D goes on by default or not -->
 </include>
 
 <!-- AMCL with Map -->
@@ -37,8 +37,8 @@
 
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
 
-  <node name="path_relative" pkg="AR_Study_Dre" type="path_arfuros" respawn="true"/>
-  <node name="fullpath_relative" pkg="AR_Study_Dre" type="fullpath_arfuros" respawn="true"/>
+  <node name="path_relative" pkg="ar_study_dre" type="path_arfuros" respawn="true"/>
+  <node name="fullpath_relative" pkg="ar_study_dre" type="fullpath_arfuros" respawn="true"/>
   <node name="blinker" pkg="AR_Study_Dre" type="blinker_arfuros" respawn="true"/>
 
 </launch>
